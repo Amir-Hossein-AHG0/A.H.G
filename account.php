@@ -1,12 +1,37 @@
 <?php
-// اطلاعات کاربری
 session_start();
+
 if (!isset($_SESSION['username'])) {
-    header("Location: register.php");
-    exit();
+    echo "لطفاً وارد حساب کاربری خود شوید.";
+    exit;
 }
 
-$username = $_SESSION['username'];
+// اتصال به دیتابیس
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "goli_db"; // نام دیتابیس شما
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("اتصال به دیتابیس با خطا مواجه شد: " . $conn->connect_error);
+}
+
+$user = $_SESSION['username']; // دریافت نام کاربری از سشن
+$sql = "SELECT * FROM users WHERE username = '$user'";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    $user = $result->fetch_assoc();
+    echo "<h1>اطلاعات حساب کاربری</h1>";
+    echo "<p>نام کاربری: " . $user['username'] . "</p>";
+    echo "<p>ایمیل: " . $user['email'] . "</p>";
+} else {
+    echo "اطلاعات کاربری یافت نشد.";
+}
+
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -19,14 +44,9 @@ $username = $_SESSION['username'];
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>حساب کاربری: <?php echo $username; ?></h1>
-        </header>
-
-        <section>
-            <p>ایمیل: <?php echo $_SESSION['email']; ?></p>
-            <a href="logout.php">خروج</a>
-        </section>
+        <h1>اطلاعات حساب کاربری</h1>
+        <p>خوش آمدید، <?php echo $_SESSION['username']; ?>!</p>
+        <a href="logout.php">خروج</a>
     </div>
 </body>
 </html>
