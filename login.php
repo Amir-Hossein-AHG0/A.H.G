@@ -2,57 +2,50 @@
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // اتصال به دیتابیس
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "goli_db"; // نام دیتابیس شما
+  $email = $_POST['email'];
+  $password = $_POST['password'];
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
+  $conn = new mysqli("localhost", "root", "", "goli");
+  if ($conn->connect_error) {
+    die("اتصال به پایگاه داده ناموفق: " . $conn->connect_error);
+  }
 
-    if ($conn->connect_error) {
-        die("اتصال به دیتابیس با خطا مواجه شد: " . $conn->connect_error);
-    }
-
-    $user = $_POST['username'];
-    $pass = $_POST['password'];
-
-    // بررسی ورود اطلاعات کاربر
-    $sql = "SELECT * FROM users WHERE username = '$user' AND password = '$pass'";
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        $_SESSION['username'] = $user; // ذخیره نام کاربری در سشن
-        echo "ورود موفقیت‌آمیز. در حال هدایت به صفحه حساب کاربری...";
-        header("Location: account.php"); // هدایت به صفحه حساب کاربری
+  $sql = "SELECT * FROM users WHERE email='$email'";
+  $result = $conn->query($sql);
+  if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    if (password_verify($password, $row['password'])) {
+      $_SESSION['user_id'] = $row['id'];
+      header("Location: forum.html");
+      exit();
     } else {
-        echo "نام کاربری یا رمز عبور اشتباه است.";
+      echo "رمز عبور اشتباه است.";
     }
-
-    $conn->close();
+  } else {
+    echo "کاربری با این ایمیل یافت نشد.";
+  }
+  $conn->close();
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ورود | Goli</title>
-    <link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ورود - Goli</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>ورود به حساب کاربری</h1>
-        <form method="POST" action="login.php">
-            <label for="username">نام کاربری:</label>
-            <input type="text" id="username" name="username" required>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html" class="logo">Goli</a></li>
+        <li><a href="register.php">ثبت‌نام</a></li>
+        <li><a href="login.php" class="active">ورود</a></li>
+        <li><a href="forum.html">انجمن</a></li>
+      </ul>
 
-            <label for="password">رمز عبور:</label>
-            <input type="password" id="password" name="password" required>
-
-            <button type="submit">ورود</button>
-        </form>
-    </div>
-</body>
-</html>
+::contentReference[oaicite:2]{index=2}
+ 
