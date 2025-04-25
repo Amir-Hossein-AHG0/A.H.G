@@ -1,10 +1,14 @@
 <?php
-// مدیریت سایت
+// شروع سشن
 session_start();
+
+// بررسی اینکه آیا کاربر وارد شده و نقش آن "admin" است یا خیر
 if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
-    header("Location: register.php");
+    header("Location: login.php"); // اگر کاربر مدیر نیست، به صفحه ورود هدایت می‌شود
     exit();
 }
+
+// در اینجا می‌توانید محتوای مخصوص بخش مدیریت را اضافه کنید
 ?>
 
 <!DOCTYPE html>
@@ -17,18 +21,14 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'admin') {
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>پنل مدیریت</h1>
-        </header>
-
-        <section>
-            <h2>دستورات مدیریت:</h2>
-            <ul>
-                <li><a href="manage_posts.php">مدیریت پست‌ها</a></li>
-                <li><a href="manage_users.php">مدیریت کاربران</a></li>
-                <li><a href="manage_comments.php">مدیریت نظرات</a></li>
-            </ul>
-        </section>
+        <h1>بخش مدیریت</h1>
+        <p>خوش آمدید، مدیر گرامی!</p>
+        <!-- سایر محتوای مربوط به مدیریت -->
+        <nav>
+            <a href="admin_users.php">مدیریت کاربران</a>
+            <a href="admin_comments.php">مدیریت نظرات</a>
+            <a href="logout.php">خروج</a>
+        </nav>
     </div>
 </body>
 </html>
