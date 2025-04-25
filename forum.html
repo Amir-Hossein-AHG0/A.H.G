@@ -1,51 +1,41 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>گفت‌وگو | Goli</title>
-    <link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>انجمن - Goli</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>گفت‌وگو و نظرات</h1>
-        </header>
-
-        <section>
-            <form method="POST" action="submit_comment.php">
-                <label for="comment">نظر خود را بنویسید:</label>
-                <textarea id="comment" name="comment" required></textarea>
-                <button type="submit">ارسال نظر</button>
-            </form>
-        </section>
-
-        <section>
-            <h2>نظرات کاربران:</h2>
-            <div class="comments">
-                <?php
-                    // نمایش نظرات از دیتابیس
-                    $conn = new mysqli("localhost", "root", "", "goli_db");
-
-                    if ($conn->connect_error) {
-                        die("Connection failed: " . $conn->connect_error);
-                    }
-
-                    $sql = "SELECT comment FROM comments";
-                    $result = $conn->query($sql);
-
-                    if ($result->num_rows > 0) {
-                        while($row = $result->fetch_assoc()) {
-                            echo "<p>" . $row["comment"] . "</p>";
-                        }
-                    } else {
-                        echo "<p>No comments yet!</p>";
-                    }
-
-                    $conn->close();
-                ?>
-            </div>
-        </section>
-    </div>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html" class="logo">Goli</a></li>
+        <li><a href="register.php">ثبت‌نام</a></li>
+        <li><a href="login.php">ورود</a></li>
+        <li><a href="forum.html" class="active">انجمن</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="forum">
+      <h1>انجمن گلی آباد</h1>
+      <div class="topics">
+        <div class="topic">
+          <h2>موضوع اول</h2>
+          <p>توضیحاتی درباره موضوع اول...</p>
+        </div>
+        <div class="topic">
+          <h2>موضوع دوم</h2>
+          <p>توضیحاتی درباره موضوع دوم...</p>
+        </div>
+        <!-- افزودن موضوعات بیشتر -->
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2025 Goli. تمامی حقوق محفوظ است.</p>
+  </footer>
 </body>
 </html>
