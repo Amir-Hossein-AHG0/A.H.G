@@ -1,0 +1,49 @@
+body {
+    font-family: 'Vazirmatn', sans-serif;
+    background-color: #e9f1ff;
+    margin: 0;
+    padding: 0;
+    direction: rtl;
+}
+
+.container {
+    max-width: 600px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+input, textarea, button {
+    display: block;
+    width: 90%;
+    margin: 10px auto;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background-color: #0078D4;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #005fa3;
+}
+
+nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #0078D4;
+    font-weight: 500;
+}
+
+nav a:hover {
+    color: #004c8c;
+}
